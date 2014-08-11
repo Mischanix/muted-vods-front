@@ -36,7 +36,6 @@ model = {
   }
   status: {}
   refresh: (e) ->
-    console.log 'Refresh!'
     api.refresh model.channel, handle
     check model.channel
     !!e.preventDefault()
@@ -124,7 +123,6 @@ renderTab = (status) ->
         percent: video.muted_seconds / video.total_seconds
       }
     model.hasVideos = !!model.videos.length
-    console.log model.summary
     $.bootstrapSortable true
   else
     model.hasVideos = false
@@ -134,7 +132,6 @@ renderTab = (status) ->
 check = (name) ->
   name = name.substr 1 + name.lastIndexOf '/'
   name = name.trim().toLowerCase()
-  console.log name
   clearInterval statusInterval if statusInterval isnt -1
   statusInterval = setInterval (->
     api.status name, handle
