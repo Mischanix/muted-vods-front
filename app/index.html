@@ -1,0 +1,108 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>Muted Stats</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <script type="text/template" binds-to="status">
+<p rv-show="error" class="text-danger"><strong>Error: {error}</strong></p>
+<section rv-show="results">
+  <ul class="nav nav-tabs">
+    <li rv-class-active="mode.broadcasts" rv-on-click="modeBroadcasts"><a href="#">Broadcasts</a></li>
+    <li rv-class-active="mode.highlights" rv-on-click="modeHighlights"><a href="#">Highlights</a></li>
+  </ul>
+  <br/>
+  <div class="progress">
+    <div class="progress-bar progress-bar-info" rv-progress="summary.unprocessed"></div>
+    <div class="progress-bar progress-bar-success" rv-progress="summary.unmuted"></div>
+    <div class="progress-bar progress-bar-danger" rv-progress="summary.muted"></div>
+  </div>
+  <p><strong>Summary:</strong></p>
+  <ul>
+    <li rv-each-line="summary.lines">
+      {line.duration | minutes} minutes {line.name} ({line.percent | percent})
+    </li>
+  </ul>
+  <table rv-show="hasVideos" class="table table-striped sortable">
+    <thead><tr>
+      <th>VoD Title</th>
+      <th>Date</th>
+      <th>Views</th>
+      <th>Total</th>
+      <th>Muted</th>
+      <th>Muted %</th>
+    </tr></thead>
+    <tbody><tr rv-each-video="videos">
+      <td><a rv-link="video.link">{video.title}</a></td>
+      <td>{video.recorded | date}</td>
+      <td rv-sortvalue="video.views">{video.views}</td>
+      <td rv-sortvalue="video.total">{video.total | minutes}m</td>
+      <td rv-sortvalue="video.muted">{video.muted | minutes}m</td>
+      <td rv-sortvalue="video.percent">{video.percent | percent}</td>
+    </tr></tbody>
+  </table>
+</section>
+<p rv-show="progress.phase_zero"><strong>Loading...</strong></p>
+<section rv-show="progress.show">
+  <p rv-show="progress.phase_one"><strong>Loading VoD list...</strong></p>
+  <p rv-show="progress.phase_two"><strong>Loading VoD list...</strong></p>
+  <p>{progress.current}/{progress.total}</p>
+  <div class="progress">
+    <div class="progress-bar progress-bar-primary" rv-progress="progress.datas"></div>
+    <div class="progress-bar progress-bar-info" rv-progress="progress.ids"></div>
+  </div>
+</section>
+<section rv-show="finished">
+  <p rv-show="refreshable" class="muted">
+    This data is {age | minutes} minutes old. <a href="#" rv-on-click="refresh">Refresh?</a>
+  </p>
+  <p class="muted">
+    <a rv-link="permalink">permalink</a>
+  </p>
+</section>
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h3 class="text-muted">Muted VoD Stats</h3>
+        <h4>How much of your soon-to-be-deleted VoDs are muted?</h4>
+      </div>
+
+      <form binds-to="channel">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Channel name"
+          rv-value="name">
+        </div>
+        <button type="submit" class="btn btn-default"
+          rv-enabled="checkable" rv-on-click="check">
+          Check
+        </button>
+      </form>
+      <br>
+      <div id="results"></div>
+      <hr>
+      <div class="footer">
+        <p>
+          by <a href="mailto:robert.m.nix@gmail.com">Robert Nix</a> &bull;
+          <a href="https://github.com/Mischanix/muted-vods">source</a> &bull;
+          <a href="https://www.digitalocean.com">digitalocean</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- build:js({app,.tmp}) scripts/app.js -->
+    <script src="scripts/app.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>

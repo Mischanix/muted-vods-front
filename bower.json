@@ -1,0 +1,12 @@
+{
+  "name": "twitch-blocks-front",
+  "private": true,
+  "dependencies": {
+    "bootstrap-sass-official": "~3.1.0",
+    "modernizr": "~2.6.2",
+    "jquery": "~1.11.0",
+    "bootstrap-sortable": "~1.9.0",
+    "rivets": "~0.6.9"
+  },
+  "devDependencies": {}
+}
