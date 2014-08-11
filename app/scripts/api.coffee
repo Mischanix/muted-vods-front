@@ -1,7 +1,7 @@
 $ = require 'jquery'
 
 get = (url, cb) ->
-  $.getJSON 'http://localhost:8080' + url, cb
+  $.getJSON 'http://mutedvods.com' + url, cb
 
 status = (channel, cb) ->
   get '/status/' + channel, cb
